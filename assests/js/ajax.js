@@ -18,7 +18,8 @@ $('#user_send').click(async function() {
     id_user = null;
   }
   
-  let name = $('#name').val();      
+  let firstName = $('#firstName').val().trim();
+  let lastName = $('#lastName').val().trim();      
   let role = $('#role').val();
   if ($('#customSwitch1')[0].checked) {
       status = 'active';
@@ -32,7 +33,7 @@ $('#user_send').click(async function() {
     cache: false,
     data: {
       id_user,
-      name,
+      name: firstName + ' ' + lastName,
       role,
       status          
     },
@@ -40,7 +41,8 @@ $('#user_send').click(async function() {
     success(data) {
       
       if (data == 'Done') {
-        $('#name').val("");        
+        $('#firstName').val("");
+        $('#lastName').val("");                
         $('#close-bt').click();
         editMode = false;                
         document.location.reload(true);
@@ -63,8 +65,10 @@ async function edit(id_user) {
     dataType: 'html',
     success(data) { 
       
-      let [name, status, role] = data.split('-@-');          
-      $('#name').val(name);            
+      let [name, status, role] = data.split('-@-');
+      let [firstName, lastName] = name.split(' ');         
+      $('#firstName').val(firstName); 
+      $('#lastName').val(lastName);           
       $('#role').val(role);
       if (status === 'active') {
         $('#customSwitch1')[0].checked = true;
@@ -81,9 +85,11 @@ async function edit(id_user) {
   
 }
 
-async function del_user(id_user, obj) {  
+async function del_user(id_user, obj) {
+   
   let name = Object.keys(obj)[0];
   name = name.replace('_', ' ');
+
   popup('#confirmModal', '.person-del', name);  
   
   $('#confirmModal').click(function(e) {
@@ -149,17 +155,25 @@ $('.action-bar').click(function(e) {
 
 
 
-$('#group_checkbox_all').change(function() {  
-  if (this.checked) {
-    $('.group_checkbox').each(function() {
-      console.log(this);
-      this.checked = true;
-    })
-  } 
+$('#group_checkbox_all').change(function() {    
+    if (this.checked) {
+      $('.group_checkbox').each(function() {        
+        this.checked = true;
+      })
+    } else {
+      $('.group_checkbox').each(function() {        
+        this.checked = false;
+      })
+    }
+   
+  
 });
+
+
+
 $('.group_checkbox').change(function() {
-  if (!this.checked) {
-    $('#group_checkbox_all')[0].checked = false;
+  if (!this.checked) { 
+      $('#group_checkbox_all')[0].checked = false;
   }
   else {
     return;

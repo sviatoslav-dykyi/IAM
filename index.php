@@ -97,7 +97,7 @@
                   <span class="edit-icon" id="edit_user" onclick="edit(<?=$user->id_user?>)">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </span>
-                  <span class="del-icon" id="del_user" onclick="del_user(<?=$user->id_user?>, {<?= str_replace(' ', '_', $user->name)?>: ''})">
+                  <span class="del-icon" id="del_user" onclick="del_user(<?=$user->id_user?>, {<?= str_replace(' ', '_', $user->name) ?>: ''})">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </span>                                       
                 </td>
@@ -145,8 +145,13 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="name" class="col-form-label">Name (First Name, Last Name):</label>
-            <input type="text" class="form-control" id="name">
+            <label for="firstName" class="col-form-label">First Name:</label>
+            <input type="text" class="form-control" id="firstName">
+          </div>
+
+          <div class="form-group">
+            <label for="lastName" class="col-form-label">Last Name:</label>
+            <input type="text" class="form-control" id="lastName">
           </div>
           
           <div class="form-group">
